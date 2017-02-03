@@ -1,5 +1,7 @@
 package com.forrod.mysql.dbconn;
 
+import com.forrod.mysql.model.Person;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,5 +31,20 @@ public class ConnManager {
             e.printStackTrace();
         }
         return num;
+    }
+
+    public Person findOne(Integer id) {
+        Person p = null;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM person AS p WHERE p.id = '" +id+ "'");
+            while (rs.next()) {
+                p = new Person(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("address"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return p;
     }
 }
