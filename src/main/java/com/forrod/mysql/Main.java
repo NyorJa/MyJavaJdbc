@@ -17,5 +17,10 @@ public class Main {
         System.out.println("================RESULT================");
         System.out.println("Person: " + person.toString());
         System.out.println("================RESULT================");
+
+        String personName = personDao.getName(1);
+        System.out.println("================RESULT================");
+        System.out.println("Person name: " + personName);
+        System.out.println("================RESULT================");
     }
 }

@@ -47,4 +47,17 @@ public class ConnManager {
         }
         return p;
     }
+
+    public String getName(Integer id) {
+        String name = "";
+        try {
+            rs = stmt.executeQuery("SELECT p.name FROM person AS p WHERE p.id = '"+id+"'");
+            while (rs.next()) {
+                name = rs.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }
