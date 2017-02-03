@@ -4,6 +4,8 @@ package com.forrod.mysql;
 import com.forrod.mysql.dbconn.ConnManager;
 import com.forrod.mysql.model.Person;
 
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) throws Exception {
 
@@ -21,6 +23,11 @@ public class Main {
         String personName = personDao.getName(1);
         System.out.println("================RESULT================");
         System.out.println("Person name: " + personName);
+        System.out.println("================RESULT================");
+
+        Map<String, Object> customFieldResult = personDao.getCustomField(1);
+        System.out.println("================RESULT================");
+        System.out.println("Person name: " + customFieldResult);
         System.out.println("================RESULT================");
     }
 }

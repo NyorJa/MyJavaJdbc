@@ -3,6 +3,8 @@ package com.forrod.mysql.dbconn;
 import com.forrod.mysql.model.Person;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +38,7 @@ public class ConnManager {
     public Person findOne(Integer id) {
         Person p = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM person AS p WHERE p.id = '" +id+ "'");
+            rs = stmt.executeQuery("SELECT * FROM person AS p WHERE p.id = '" + id + "'");
             while (rs.next()) {
                 p = new Person(rs.getInt("id"),
                         rs.getString("name"),
@@ -51,7 +53,7 @@ public class ConnManager {
     public String getName(Integer id) {
         String name = "";
         try {
-            rs = stmt.executeQuery("SELECT p.name FROM person AS p WHERE p.id = '"+id+"'");
+            rs = stmt.executeQuery("SELECT p.name FROM person AS p WHERE p.id = '" + id + "'");
             while (rs.next()) {
                 name = rs.getString("name");
             }
@@ -59,5 +61,19 @@ public class ConnManager {
             e.printStackTrace();
         }
         return name;
+    }
+
+    public Map<String, Object> getCustomField(Integer id) {
+        Map<String, Object> payload = new HashMap<>();
+        try {
+            rs = stmt.executeQuery("SELECT p.id, p.name FROM person AS p WHERE p.id = '" + id + "'");
+            while (rs.next()) {
+                payload.put("id", rs.getInt("id"));
+                payload.put("name", rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return payload;
     }
 }
