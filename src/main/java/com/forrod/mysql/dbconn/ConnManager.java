@@ -13,6 +13,8 @@ public class ConnManager {
     private Statement stmt;
     private ResultSet rs;
 
+    private static final Logger LOG = Logger.getLogger(ConnManager.class.getName());
+
     public ConnManager() {
         try {
             conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
@@ -54,6 +56,16 @@ public class ConnManager {
         try {
             stmt.execute("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
                     " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(Integer id) {
+        LOG.info("Deleting person id: " + id);
+        try {
+            stmt.execute("DELETE FROM person AS p WHERE p.id = '" + id + "'");
+            LOG.info("Deleted!!!!!!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
