@@ -61,6 +61,15 @@ public class ConnManager {
         }
     }
 
+    public void create(Person p) {
+        try {
+            stmt.executeUpdate("INSERT INTO person (name, address) VALUES('" + p.getName() + "', '" + p.getAddress() + "')");
+            LOG.info("Created!!!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void delete(Integer id) {
         LOG.info("Deleting person id: " + id);
         try {

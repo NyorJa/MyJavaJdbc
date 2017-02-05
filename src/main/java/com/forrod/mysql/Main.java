@@ -10,6 +10,17 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         ConnManager personDao = new ConnManager();
+
+        System.out.println("================RESULT================");
+        System.out.println("Creating person");
+        Person p = new Person();
+        p.setName("nyor");
+        p.setAddress("mandaluyong");
+        System.out.println("Person: " + p.toString());
+        personDao.create(p);
+        System.out.println("================RESULT================");
+
+
         Integer res = personDao.countPersons();
         System.out.println("================RESULT================");
         System.out.println("Person count: " + res);
