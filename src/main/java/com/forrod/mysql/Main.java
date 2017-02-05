@@ -4,6 +4,7 @@ package com.forrod.mysql;
 import com.forrod.mysql.dbconn.ConnManager;
 import com.forrod.mysql.model.Person;
 
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -13,11 +14,11 @@ public class Main {
 
         System.out.println("================RESULT================");
         System.out.println("Creating person");
-        Person p = new Person();
-        p.setName("nyor");
-        p.setAddress("mandaluyong");
-        System.out.println("Person: " + p.toString());
-        personDao.create(p);
+        Person person1 = new Person();
+        person1.setName("nyor");
+        person1.setAddress("mandaluyong");
+        System.out.println("Person: " + person1.toString());
+        personDao.create(person1);
         System.out.println("================RESULT================");
 
 
@@ -46,5 +47,8 @@ public class Main {
         System.out.println("================RESULT================");
         System.out.println("Person: " + person.toString());
         System.out.println("================RESULT================");
+
+        List<Person> personList = personDao.getAll();
+        personList.forEach(p -> System.out.println(p.toString()));
     }
 }

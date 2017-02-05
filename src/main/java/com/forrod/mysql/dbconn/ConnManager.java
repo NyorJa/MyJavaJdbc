@@ -3,7 +3,9 @@ package com.forrod.mysql.dbconn;
 import com.forrod.mysql.model.Person;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,6 +80,23 @@ public class ConnManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Person> getAll() {
+        List<Person> personList = new ArrayList<>();
+        try {
+            rs = stmt.executeQuery("SELECT * FROM person");
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                personList.add(new Person(id, name, address));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return personList;
     }
 
     public String getName(Integer id) {
