@@ -29,5 +29,11 @@ public class Main {
         System.out.println("================RESULT================");
         System.out.println("Person name: " + customFieldResult);
         System.out.println("================RESULT================");
+
+        personDao.update(new Person(1, "rods", "sda"));
+        person = personDao.findOne(1);
+        System.out.println("================RESULT================");
+        System.out.println("Person: " + person.toString());
+        System.out.println("================RESULT================");
     }
 }

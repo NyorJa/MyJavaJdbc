@@ -50,6 +50,15 @@ public class ConnManager {
         return p;
     }
 
+    public void update(Person p) {
+        try {
+            stmt.execute("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
+                    " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getName(Integer id) {
         String name = "";
         try {
