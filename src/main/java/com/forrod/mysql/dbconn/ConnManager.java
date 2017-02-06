@@ -19,9 +19,10 @@ public class ConnManager {
 
     public ConnManager() {
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
             stmt = conn.createStatement();
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ConnManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -56,7 +57,7 @@ public class ConnManager {
 
     public void update(Person p) {
         try {
-            stmt.execute("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
+            stmt.executeUpdate("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
                     " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
