@@ -7,7 +7,7 @@ Simple JDBC program with Maven
 3. MySQL 5.6 above - You can install via XAMPP (https://www.apachefriends.org/index.html) or (https://dev.mysql.com/downloads/mysql/)
 4. MySqlClient - DBeaver (http://dbeaver.jkiss.org/) or phpmyadmin provided by XAMPP
 5. IDE (it depends in what you are comfortable)(Eclipse, Netbeans, IntelliJ) it doesn't matter because the project itself is Mavenized
-**PS Notepad Will do
+**PS Notepad Will do or for UI/Swing Development I recommend Netbeans
 
 ### Installation ###
 1. Clone or download the project
