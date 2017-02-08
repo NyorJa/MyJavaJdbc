@@ -99,6 +99,24 @@ public class ConnManager {
 
         return personList;
     }
+    
+    public List<Person> getAllViaNameAndAddress(String name, String address) {
+        List<Person> personList = new ArrayList<>();
+        String query = "SELECT * FROM person AS p "
+                + " WHERE p.name LIKE '" + "%" +name+ "%"+ "' AND "
+                + " p.address LIKE '" + "%" +address+ "%" + "'";
+        try {
+            rs = stmt.executeQuery(query);
+            while(rs.next()) {
+                personList.add(new Person(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("address")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConnManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return personList;
+    }
 
     public String getName(Integer id) {
         String name = "";
