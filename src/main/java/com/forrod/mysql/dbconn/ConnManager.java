@@ -87,7 +87,7 @@ public class ConnManager {
     public void delete(Integer id) {
         LOG.info("Deleting person id: " + id);
         try {
-            stmt.execute("DELETE FROM person p WHERE id = '" + id + "'");
+            stmt.execute("DELETE FROM person WHERE id = '" + id + "'");
             LOG.info("Deleted!!!!!!");
         } catch (SQLException e) {
             e.printStackTrace();
