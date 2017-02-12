@@ -43,12 +43,11 @@ public class Main {
         System.out.println("================RESULT================");
 
         personDao.update(new Person(1, "rods", "sda"));
-        person = personDao.findOne(1);
-        System.out.println("================RESULT================");
-        System.out.println("Person: " + person.toString());
-        System.out.println("================RESULT================");
 
-        List<Person> personList = personDao.getAll();
+        List<Person> personLists = personDao.getAll();
+        personLists.forEach(p -> System.out.println(p.toString()));
+
+        List<Person> personList = personDao.getAllViaNameAndAddress("nyors", "mandaluyong");
         personList.forEach(p -> System.out.println(p.toString()));
     }
 }

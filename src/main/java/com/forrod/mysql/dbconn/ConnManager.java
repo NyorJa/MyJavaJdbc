@@ -14,6 +14,7 @@ public class ConnManager {
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
+    private PreparedStatement ps;
 
     private static final Logger LOG = Logger.getLogger(ConnManager.class.getName());
 
@@ -21,7 +22,7 @@ public class ConnManager {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
-            stmt = conn.createStatement();
+//            stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ConnManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,7 +44,9 @@ public class ConnManager {
     public Person findOne(Integer id) {
         Person p = null;
         try {
-            rs = stmt.executeQuery("SELECT * FROM person AS p WHERE p.id = '" + id + "'");
+            ps = conn.prepareStatement("SELECT * FROM person AS p where p.id = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 p = new Person(rs.getInt("id"),
                         rs.getString("name"),
@@ -66,7 +69,10 @@ public class ConnManager {
 
     public void create(Person p) {
         try {
-            stmt.executeUpdate("INSERT INTO person (name, address) VALUES('" + p.getName() + "', '" + p.getAddress() + "')");
+            ps = conn.prepareStatement("INSERT INTO person (name, address) VALUES(?, ?)");
+            ps.setString(1, p.getName());
+            ps.setString(2, p.getAddress());
+            ps.executeUpdate();
             LOG.info("Created!!!");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,7 +92,8 @@ public class ConnManager {
     public List<Person> getAll() {
         List<Person> personList = new ArrayList<>();
         try {
-            rs = stmt.executeQuery("SELECT * FROM person");
+            ps = conn.prepareStatement("SELECT * FROM person");
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Integer id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -102,11 +109,12 @@ public class ConnManager {
     
     public List<Person> getAllViaNameAndAddress(String name, String address) {
         List<Person> personList = new ArrayList<>();
-        String query = "SELECT * FROM person AS p "
-                + " WHERE p.name LIKE '" + "%" +name+ "%"+ "' AND "
-                + " p.address LIKE '" + "%" +address+ "%" + "'";
+        String query = "SELECT * FROM person AS p  WHERE p.name LIKE ? AND p.address LIKE ? ";
         try {
-            rs = stmt.executeQuery(query);
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + name + "%");
+            ps.setString(2, "%" + address + "%");
+            rs = ps.executeQuery();
             while(rs.next()) {
                 personList.add(new Person(rs.getInt("id"),
                         rs.getString("name"),
@@ -121,7 +129,9 @@ public class ConnManager {
     public String getName(Integer id) {
         String name = "";
         try {
-            rs = stmt.executeQuery("SELECT p.name FROM person AS p WHERE p.id = '" + id + "'");
+            ps = conn.prepareStatement("SELECT p.name FROM person AS p WHERE p.id = ? ");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 name = rs.getString("name");
             }
