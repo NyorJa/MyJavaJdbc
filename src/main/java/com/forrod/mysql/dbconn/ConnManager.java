@@ -1,14 +1,14 @@
 package com.forrod.mysql.dbconn;
 
 import com.forrod.mysql.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ConnManager {
     private Connection conn;
@@ -16,15 +16,16 @@ public class ConnManager {
     private ResultSet rs;
     private PreparedStatement ps;
 
-    private static final Logger LOG = Logger.getLogger(ConnManager.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(ConnManager.class);
 
     public ConnManager() {
         try {
+            LOG.info("Connecting database!!!!");
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
 //            stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(ConnManager.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex.getMessage());
         }
     }
 
@@ -121,7 +122,7 @@ public class ConnManager {
                         rs.getString("address")));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ConnManager.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex.getMessage());
         }
         return personList;
     }
