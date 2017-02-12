@@ -21,7 +21,7 @@ public class ConnManager {
         try {
             LOG.info("Connecting database!!!!");
             Class.forName(DBParams.DB_DRIVER_DIALECT);
-            conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
+            conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, DBParams.DB_PASSWORD);
             stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
             LOG.error(ex.getMessage());
