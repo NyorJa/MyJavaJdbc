@@ -65,6 +65,7 @@ public class SampleListForm extends javax.swing.JFrame {
         searchViaNameAndAddress = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        updateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,6 +134,13 @@ public class SampleListForm extends javax.swing.JFrame {
             }
         });
 
+        updateBtn.setText("update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,8 +161,10 @@ public class SampleListForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(searchViaNameAndAddress)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn)
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +179,8 @@ public class SampleListForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addressTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(addBtn))
+                    .addComponent(addBtn)
+                    .addComponent(updateBtn))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -238,6 +249,24 @@ public class SampleListForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_deleteBtnActionPerformed
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        // TODO add your handling code here:
+        int row = tableRes.getSelectedRow();
+        Integer id = (Integer) tableRes.getValueAt(row, 0);
+        String name = nameTxt.getText();
+        String address = addressTxt.getText();
+        int isDelete = JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (isDelete != JOptionPane.NO_OPTION) {
+            if (id != null) {
+                personDao.update(new Person(id, name, address));
+                JOptionPane.showMessageDialog(null, "Updated");
+                clearText();
+                initPanels();
+            }
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -284,5 +313,6 @@ public class SampleListForm extends javax.swing.JFrame {
     private javax.swing.JTextField nameTxt;
     private javax.swing.JButton searchViaNameAndAddress;
     private javax.swing.JTable tableRes;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }
