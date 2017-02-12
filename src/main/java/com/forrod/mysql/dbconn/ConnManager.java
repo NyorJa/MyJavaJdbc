@@ -30,6 +30,7 @@ public class ConnManager {
     }
 
     public Integer countPersons() {
+        LOG.info("Count query");
         Integer num = 0;
         try {
             rs = stmt.executeQuery("SELECT * FROM person");
@@ -43,6 +44,7 @@ public class ConnManager {
     }
 
     public Person findOne(Integer id) {
+        LOG.info("Find One query, params: {}", id);
         Person p = null;
         try {
             ps = conn.prepareStatement("SELECT * FROM person AS p where p.id = ?");
@@ -60,6 +62,7 @@ public class ConnManager {
     }
 
     public void update(Person p) {
+        LOG.info("Update Query, params: {}", p.toString());
         try {
             stmt.executeUpdate("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
                     " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
@@ -69,6 +72,7 @@ public class ConnManager {
     }
 
     public void create(Person p) {
+        LOG.info("Create query, params: {}", p.toString());
         try {
             ps = conn.prepareStatement("INSERT INTO person (name, address) VALUES(?, ?)");
             ps.setString(1, p.getName());
@@ -91,6 +95,7 @@ public class ConnManager {
     }
 
     public List<Person> getAll() {
+        LOG.info("Get all query");
         List<Person> personList = new ArrayList<>();
         try {
             ps = conn.prepareStatement("SELECT * FROM person");
@@ -109,6 +114,7 @@ public class ConnManager {
     }
     
     public List<Person> getAllViaNameAndAddress(String name, String address) {
+        LOG.info("Get all via name and address query, params, name: {}, address: {}", name, address);
         List<Person> personList = new ArrayList<>();
         String query = "SELECT * FROM person AS p  WHERE p.name LIKE ? AND p.address LIKE ? ";
         try {
@@ -128,6 +134,7 @@ public class ConnManager {
     }
 
     public String getName(Integer id) {
+        LOG.info("Get only name query, params, id: {}", id);
         String name = "";
         try {
             ps = conn.prepareStatement("SELECT p.name FROM person AS p WHERE p.id = ? ");
@@ -143,6 +150,7 @@ public class ConnManager {
     }
 
     public Map<String, Object> getCustomField(Integer id) {
+        LOG.info("Get custom return map payload query, params: {}", id);
         Map<String, Object> payload = new HashMap<>();
         try {
             rs = stmt.executeQuery("SELECT p.id, p.name FROM person AS p WHERE p.id = '" + id + "'");
