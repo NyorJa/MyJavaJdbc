@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ConnManager {
+
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
@@ -61,8 +62,8 @@ public class ConnManager {
     public void update(Person p) {
         LOG.info("Update Query, params: {}", p.toString());
         try {
-            stmt.executeUpdate("UPDATE person AS p SET p.name = '" + p.getName() + "'," +
-                    " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
+            stmt.executeUpdate("UPDATE person AS p SET p.name = '" + p.getName() + "',"
+                    + " p.address = '" + p.getAddress() + "' where p.id = '" + p.getId() + "'");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,16 +106,16 @@ public class ConnManager {
 
         return personList;
     }
-    
+
     public List<Person> getAllViaNameAndAddress(String name, String address) {
         LOG.info("Get all via name and address query, params, name: {}, address: {}", name, address);
         List<Person> personList = new ArrayList<>();
         String query = "SELECT * FROM person AS p "
-                + " WHERE p.name LIKE '" + "%" +name+ "%"+ "' AND "
-                + " p.address LIKE '" + "%" +address+ "%" + "'";
+                + " WHERE p.name LIKE '" + "%" + name + "%" + "' AND "
+                + " p.address LIKE '" + "%" + address + "%" + "'";
         try {
             rs = stmt.executeQuery(query);
-            while(rs.next()) {
+            while (rs.next()) {
                 personList.add(new Person(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("address")));
