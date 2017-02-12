@@ -21,7 +21,7 @@ public class ConnManager {
     public ConnManager() {
         try {
             LOG.info("Connecting database!!!!");
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DBParams.DB_DRIVER_DIALECT);
             conn = DriverManager.getConnection(DBParams.DB_URL, DBParams.DB_USER, null);
 //            stmt = conn.createStatement();
         } catch (SQLException | ClassNotFoundException ex) {
