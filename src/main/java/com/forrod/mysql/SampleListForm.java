@@ -64,6 +64,7 @@ public class SampleListForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         searchViaNameAndAddress = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +85,11 @@ public class SampleListForm extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tableRes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableResMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tableRes);
@@ -120,6 +126,13 @@ public class SampleListForm extends javax.swing.JFrame {
             }
         });
 
+        deleteBtn.setText("delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,7 +152,9 @@ public class SampleListForm extends javax.swing.JFrame {
                         .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(searchViaNameAndAddress)))
-                .addContainerGap(376, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteBtn)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +163,8 @@ public class SampleListForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(searchViaNameAndAddress))
+                    .addComponent(searchViaNameAndAddress)
+                    .addComponent(deleteBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addressTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -184,8 +200,43 @@ public class SampleListForm extends javax.swing.JFrame {
         String name = nameTxt.getText();
         String address = addressTxt.getText();
         personDao.create(new Person(name, address));
+        clearText();
         initPanels();
     }//GEN-LAST:event_addBtnActionPerformed
+
+    private void clearText() {
+        nameTxt.setText("");
+        addressTxt.setText("");
+    }
+    
+    private void tableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResMouseClicked
+        // TODO add your handling code here:
+        int row = tableRes.getSelectedRow();
+        Integer id = (Integer) tableRes.getValueAt(row, 0);
+        String name = (String) tableRes.getValueAt(row, 1);
+        String address = (String) tableRes.getValueAt(row, 2);
+//        JOptionPane.showMessageDialog(null, 
+//                String.format("Id: %s, Name: %s, Address: %s", id, name, address));
+        nameTxt.setText(name);
+        addressTxt.setText(address);
+    }//GEN-LAST:event_tableResMouseClicked
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        // TODO add your handling code here:
+        int isDelete = JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (isDelete != JOptionPane.NO_OPTION) {
+            int row = tableRes.getSelectedRow();
+            Integer id = (Integer) tableRes.getValueAt(row, 0);
+            if (id != null) {
+                personDao.delete(id);
+                JOptionPane.showMessageDialog(null, "DELETED");
+                initPanels();
+                clearText();
+            }
+        }
+
+    }//GEN-LAST:event_deleteBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,6 +276,7 @@ public class SampleListForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JTextField addressTxt;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
