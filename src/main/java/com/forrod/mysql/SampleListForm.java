@@ -17,9 +17,10 @@ import javax.swing.table.DefaultTableModel;
  * @author Operator-PC
  */
 public class SampleListForm extends javax.swing.JFrame {
-    
+
     private List<Person> persons = new ArrayList<>();
     private ConnManager personDao;
+
     /**
      * Creates new form SampleListForm
      */
@@ -28,12 +29,12 @@ public class SampleListForm extends javax.swing.JFrame {
         personDao = new ConnManager();
         initPanels();
     }
-    
+
     private void initPanels() {
         persons = personDao.getAll();
         initTable();
     }
-    
+
     private void initTable() {
         DefaultTableModel table = (DefaultTableModel) tableRes.getModel();
         table.setRowCount(0);
@@ -43,8 +44,6 @@ public class SampleListForm extends javax.swing.JFrame {
             table.addRow(row);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -199,11 +198,11 @@ public class SampleListForm extends javax.swing.JFrame {
 
     private void searchViaNameAndAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchViaNameAndAddressActionPerformed
         // TODO add your handling code here:
-       persons = personDao.getAllViaNameAndAddress(nameTxt.getText(), addressTxt.getText());
-       initTable();
-       if(persons.isEmpty()) {
-           JOptionPane.showMessageDialog(null, "No Results!!!!");
-       }
+        persons = personDao.getAllViaNameAndAddress(nameTxt.getText(), addressTxt.getText());
+        initTable();
+        if (persons.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No Results!!!!");
+        }
     }//GEN-LAST:event_searchViaNameAndAddressActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
@@ -219,7 +218,7 @@ public class SampleListForm extends javax.swing.JFrame {
         nameTxt.setText("");
         addressTxt.setText("");
     }
-    
+
     private void tableResMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableResMouseClicked
         // TODO add your handling code here:
         int row = tableRes.getSelectedRow();
@@ -236,15 +235,18 @@ public class SampleListForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         int isDelete = JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (isDelete != JOptionPane.NO_OPTION) {
-            int row = tableRes.getSelectedRow();
+        int row = tableRes.getSelectedRow();
+        if (row > 0) {
             Integer id = (Integer) tableRes.getValueAt(row, 0);
-            if (id != null) {
+            if (isDelete != JOptionPane.NO_OPTION) {
                 personDao.delete(id);
                 JOptionPane.showMessageDialog(null, "DELETED");
                 initPanels();
                 clearText();
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select item to the table",
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_deleteBtnActionPerformed
