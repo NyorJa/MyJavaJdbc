@@ -4,6 +4,7 @@ public class Person {
     private Integer id;
     private String name;
     private String address;
+    private Gender gender;
 
     public Person() {
     }
@@ -17,6 +18,12 @@ public class Person {
     public Person(String name, String address) {
         this.name = name;
         this.address = address;
+    }
+
+    public Person(String name, String address, Gender gender) {
+        this.name = name;
+        this.address = address;
+        this.gender = gender;
     }
 
     public Integer getId() {
@@ -43,12 +50,21 @@ public class Person {
         this.address = address;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", gender=" + gender +
                 '}';
     }
 }
