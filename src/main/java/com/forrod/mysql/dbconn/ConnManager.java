@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ConnManager {
+
     private Connection conn;
     private Statement stmt;
     private ResultSet rs;
@@ -112,7 +113,7 @@ public class ConnManager {
 
         return personList;
     }
-    
+
     public List<Person> getAllViaNameAndAddress(String name, String address) {
         LOG.info("Get all via name and address query, params, name: {}, address: {}", name, address);
         List<Person> personList = new ArrayList<>();
