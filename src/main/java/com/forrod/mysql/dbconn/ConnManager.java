@@ -1,5 +1,6 @@
 package com.forrod.mysql.dbconn;
 
+import com.forrod.mysql.model.Gender;
 import com.forrod.mysql.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +99,9 @@ public class ConnManager {
                 Integer id = rs.getInt("id");
                 String name = rs.getString("name");
                 String address = rs.getString("address");
-                personList.add(new Person(id, name, address));
+                String gender = rs.getString("gender");
+                personList.add(new Person(id, name, address,
+                        Gender.valueOf(gender != null ? gender : Constants.NONE)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,9 +119,15 @@ public class ConnManager {
         try {
             rs = stmt.executeQuery(query);
             while (rs.next()) {
-                personList.add(new Person(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("address")));
+                Integer id = rs.getInt("id");
+                String pName = rs.getString("name");
+                String pAddress = rs.getString("address");
+                String gender = rs.getString("gender");
+
+                personList.add(new Person(id,
+                        pName,
+                        pAddress,
+                        Gender.valueOf(gender != null ? gender : Constants.NONE)));
             }
         } catch (SQLException ex) {
             LOG.error(ex.getMessage());

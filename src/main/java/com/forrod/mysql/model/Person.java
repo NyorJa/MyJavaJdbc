@@ -9,6 +9,13 @@ public class Person {
     public Person() {
     }
 
+    public Person(Integer id, String name, String address, Gender gender) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.gender = gender;
+    }
+
     public Person(Integer id, String name, String address) {
         this.id = id;
         this.name = name;

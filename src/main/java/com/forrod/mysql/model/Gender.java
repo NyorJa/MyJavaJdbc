@@ -1,8 +1,10 @@
 package com.forrod.mysql.model;
 
 public enum Gender {
-    MALE("male"),
-    FEMALE("female");
+    MALE("MALE"),
+    FEMALE("FEMALE"),
+    UNDECIDED("UNDECIDED"),
+    NONE("NONE");
 
     private String value;
 
