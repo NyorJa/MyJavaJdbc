@@ -72,7 +72,10 @@ public class ConnManager {
     public void create(Person p) {
         LOG.info("Create query, params: {}", p.toString());
         try {
-            stmt.executeUpdate("INSERT INTO person (name, address) VALUES('" + p.getName() + "', '" + p.getAddress() + "')");
+            stmt.executeUpdate("INSERT INTO person (name, address, gender) " +
+                    " VALUES('" + p.getName() +
+                    "', '" + p.getAddress() +
+                    "', '" + p.getGender().getValue() + "')");
             LOG.info("Created!!!");
         } catch (SQLException e) {
             e.printStackTrace();
