@@ -1,5 +1,6 @@
 package com.forrod.mysql.dbconn;
 
+import com.forrod.mysql.dto.PersonUserInfo;
 import com.forrod.mysql.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,5 +157,38 @@ public class ConnManager {
             e.printStackTrace();
         }
         return payload;
+    }
+
+    public List<PersonUserInfo> getAllPersonUserInfos() {
+        LOG.info("Get all PersonUserInfo");
+        List<PersonUserInfo> personUserInfos = new ArrayList<>();
+        String sqlQuery = "SELECT p.id AS personId, " +
+                " u.id AS userId, " +
+                " p.name AS personName," +
+                " p.gender AS personGender, " +
+                " u.username AS username FROM person AS p LEFT JOIN user AS u ON p.id = u.person_id";
+        try {
+            rs = stmt.executeQuery(sqlQuery);
+            while (rs.next()) {
+                /*
+                PersonUserInfo personUserInfo = new PersonUserInfo();
+                personUserInfo.setPersonId(rs.getInt("personId"));
+                personUserInfo.setUserId(rs.getInt("userId"));
+                personUserInfo.setName(rs.getString("personName"));
+                personUserInfo.setGender(rs.getString("personGender"));
+                personUserInfo.setUsername(rs.getString("username"));
+
+                personUserInfos.add(personUserInfo);
+                */
+                personUserInfos.add(new PersonUserInfo(rs.getInt("personId"),
+                        rs.getInt("userId"),
+                        rs.getString("personName"),
+                        rs.getString("personGender"),
+                        rs.getString("username")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personUserInfos;
     }
 }

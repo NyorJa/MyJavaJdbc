@@ -2,6 +2,7 @@ package com.forrod.mysql;
 
 
 import com.forrod.mysql.dbconn.ConnManager;
+import com.forrod.mysql.dto.PersonUserInfo;
 import com.forrod.mysql.model.Person;
 
 import java.util.List;
@@ -50,5 +51,13 @@ public class Main {
 
         List<Person> personList = personDao.getAll();
         personList.forEach(p -> System.out.println(p.toString()));
+
+        System.out.println("================RESULT================");
+        List<PersonUserInfo> personUserInfos = personDao.getAllPersonUserInfos();
+//        personUserInfos.forEach(personUserInfo -> System.out.println(personUserInfo.toString()));
+        for (PersonUserInfo personUserInfo : personUserInfos) {
+            System.out.println(personUserInfo.toString());
+        }
+        System.out.println("================RESULT================");
     }
 }
