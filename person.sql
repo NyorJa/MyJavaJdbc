@@ -1,0 +1,7 @@
+CREATE TABLE person
+(
+    id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name VARCHAR(45),
+    address VARCHAR(100),
+    gender VARCHAR(10)
+);
