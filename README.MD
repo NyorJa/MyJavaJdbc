@@ -14,7 +14,7 @@ Simple JDBC program with Maven
 2. Build the project
 3. cd /path/to/project
 4. ```mvn clean install``` for dependencies
-5. For database example execute the sql scripts (person.sql, user.sql)
+5. For database example execute the sql scripts (person.sql, user.sql) 
 
 ### Running it ###
 Just run it on your favorite IDE or the main class itself generated in target/
